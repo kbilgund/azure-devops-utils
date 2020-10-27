@@ -112,6 +112,12 @@ throw_if_empty region $region
 
 default_hal_config="/home/$jenkins_username/.hal/default"
 
+sudo apt-get install -y python-software-properties debconf-utils
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo apt-get update
+echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+sudo apt-get install -y oracle-java8-installer
+
 run_util_script "spinnaker/install_halyard/install_halyard.sh" -san "$storage_account_name" -sak "$storage_account_key" -u "$jenkins_username"
 # Change front50 port so it doesn't conflict with Jenkins
 front50_settings="$default_hal_config/service-settings/front50.yml"
